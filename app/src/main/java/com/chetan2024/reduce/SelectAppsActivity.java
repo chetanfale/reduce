@@ -1,10 +1,12 @@
 package com.chetan2024.reduce;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +34,23 @@ public class SelectAppsActivity extends AppCompatActivity {
         } else {
             fetchInstalledApps(appsListLayout, packageManager);
         }
+
+        // Set up the submit button
+        Button submitButton = findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(v -> {
+            ArrayList<String> selectedApps = new ArrayList<>();
+            for (int i = 0; i < appsListLayout.getChildCount(); i++) {
+                CheckBox checkBox = (CheckBox) appsListLayout.getChildAt(i);
+                if (checkBox.isChecked()) {
+                    selectedApps.add(checkBox.getTag().toString());
+                }
+            }
+
+            // Create an Intent to start ConfirmActivity
+            Intent intent = new Intent(SelectAppsActivity.this, ConfirmActivity.class);
+            intent.putStringArrayListExtra("SELECTED_APPS", selectedApps);
+            startActivity(intent);
+        });
     }
 
     private void fetchInstalledApps(LinearLayout appsListLayout, PackageManager packageManager) {
@@ -68,9 +87,6 @@ public class SelectAppsActivity extends AppCompatActivity {
             }
         }
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

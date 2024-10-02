@@ -22,7 +22,7 @@
         <activity android:name=".MotivationActivity" android:exported="true"/>
         <activity android:name=".PermReqActivity" android:exported="true"/>
         <activity android:name=".SelectAppsActivity" android:exported="true"/>
-        <activity android:name=".ConfirmMissionActivity" android:exported="true"/>
+        <activity android:name=".ConfirmActivity" android:exported="true"/>
         <activity android:name=".RedirectDWActivity" android:exported="true"/>
 
     </application>
