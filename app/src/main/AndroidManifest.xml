@@ -24,6 +24,7 @@
         <activity android:name=".SelectAppsActivity" android:exported="true"/>
         <activity android:name=".ConfirmActivity" android:exported="true"/>
         <activity android:name=".RedirectDWActivity" android:exported="true"/>
+        <activity android:name=".SummaryActivity"/>
 
     </application>
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
