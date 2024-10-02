@@ -8,14 +8,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Applications to Limit"
+        android:text="Select Applications to Limit Time"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="16dp"/>
 
-    <ListView
-        android:id="@+id/appsListView"
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"> <!-- Allow ScrollView to take available space -->
+
+        <LinearLayout
+            android:id="@+id/appsListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Checkboxes will be dynamically added here -->
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp"/>
+        android:text="Submit"
+        android:layout_marginTop="16dp"/>
+
 </LinearLayout>
