@@ -5,16 +5,32 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/selectedAppsLayout"
-        android:layout_width="match_parent"
+    <!-- Heading TextView -->
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:text="Selected Applications"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"> <!-- Allow ScrollView to take available space -->
+
+        <LinearLayout
+            android:id="@+id/selectedAppsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- App icons and names will be dynamically added here -->
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/proceedButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Proceed"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

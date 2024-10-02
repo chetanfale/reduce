@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import android.view.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,19 +38,21 @@ public class SelectAppsActivity extends AppCompatActivity {
 
         // Set up the submit button
         Button submitButton = findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(v -> {
-            ArrayList<String> selectedApps = new ArrayList<>();
-            for (int i = 0; i < appsListLayout.getChildCount(); i++) {
-                CheckBox checkBox = (CheckBox) appsListLayout.getChildAt(i);
-                if (checkBox.isChecked()) {
-                    selectedApps.add(checkBox.getTag().toString());
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ArrayList<String> selectedAppPackages = new ArrayList<>();
+                for (int i = 0; i < appsListLayout.getChildCount(); i++) {
+                    CheckBox checkBox = (CheckBox) appsListLayout.getChildAt(i);
+                    if (checkBox.isChecked()) {
+                        selectedAppPackages.add((String) checkBox.getTag());
+                    }
                 }
-            }
 
-            // Create an Intent to start ConfirmActivity
-            Intent intent = new Intent(SelectAppsActivity.this, ConfirmActivity.class);
-            intent.putStringArrayListExtra("SELECTED_APPS", selectedApps);
-            startActivity(intent);
+                // Pass selected apps to ConfirmActivity
+                Intent intent = new Intent(SelectAppsActivity.this, ConfirmActivity.class);
+                intent.putStringArrayListExtra("selectedApps", selectedAppPackages);
+                startActivity(intent);
+            }
         });
     }
 
