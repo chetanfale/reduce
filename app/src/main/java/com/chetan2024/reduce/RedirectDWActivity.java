@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RedirectDWActivity extends AppCompatActivity {
@@ -33,13 +34,13 @@ public class RedirectDWActivity extends AppCompatActivity {
 
     private void launchDigitalWellbeingApp() {
         Intent intent = new Intent();
-        intent.setPackage("com.google.android.apps.wellbeing");
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setClassName("com.google.android.apps.wellbeing", "com.google.android.apps.wellbeing.settings.TopLevelSettingsActivity");
+
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Log.e("RedirectDWActivity", "Digital Wellbeing app not found", e);
+            Toast.makeText(RedirectDWActivity.this, "Digital Wellbeing app not found", Toast.LENGTH_SHORT).show(); // Fixed the context
         }
     }
 }
