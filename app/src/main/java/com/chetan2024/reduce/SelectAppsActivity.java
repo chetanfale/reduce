@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectAppsActivity extends AppCompatActivity {
@@ -40,23 +41,34 @@ public class SelectAppsActivity extends AppCompatActivity {
         // Clear previous views if any
         appsListLayout.removeAllViews();
 
+        // List of popular apps to include explicitly
+        List<String> popularApps = new ArrayList<>();
+        popularApps.add("com.google.android.youtube"); // YouTube package name
+        popularApps.add("com.google.android.apps.youtube.music"); // YouTube Music package name
+        // Add more package names of other popular apps here if needed
+
         // Loop through the installed apps
         for (ApplicationInfo appInfo : appsList) {
-            // Filter out system apps (optional)
-            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                // Log the app name and package for debugging
-                Log.d("AppInfo", "App: " + appInfo.loadLabel(packageManager) + " Package: " + appInfo.packageName);
+            // Log the app name and package for debugging
+            Log.d("AppInfo", "App: " + appInfo.loadLabel(packageManager) + " Package: " + appInfo.packageName);
 
-                // Create a CheckBox for each app
-                CheckBox checkBox = new CheckBox(this);
-                checkBox.setText(appInfo.loadLabel(packageManager)); // Set app name
-                checkBox.setTag(appInfo.packageName); // Store the package name as a tag
+            // Create a CheckBox for each app
+            CheckBox checkBox = new CheckBox(this);
+            checkBox.setText(appInfo.loadLabel(packageManager)); // Set app name
+            checkBox.setTag(appInfo.packageName); // Store the package name as a tag
 
+            // Check if the app is a popular app and include it
+            if (popularApps.contains(appInfo.packageName) || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
                 // Add the CheckBox to the layout
+                appsListLayout.addView(checkBox);
+            } else if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                // Include non-system apps
                 appsListLayout.addView(checkBox);
             }
         }
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
