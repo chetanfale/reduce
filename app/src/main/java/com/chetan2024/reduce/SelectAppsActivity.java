@@ -45,6 +45,7 @@ public class SelectAppsActivity extends AppCompatActivity {
         List<String> popularApps = new ArrayList<>();
         popularApps.add("com.google.android.youtube"); // YouTube package name
         popularApps.add("com.google.android.apps.youtube.music"); // YouTube Music package name
+        popularApps.add("com.google.android.apps.docs"); // Google Drive package name
         // Add more package names of other popular apps here if needed
 
         // Loop through the installed apps
@@ -67,6 +68,7 @@ public class SelectAppsActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
 
