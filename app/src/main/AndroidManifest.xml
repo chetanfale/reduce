@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.chetan2024.reduce">
 
     <application
@@ -25,5 +26,6 @@
         <activity android:name=".RedirectDWActivity" android:exported="true"/>
 
     </application>
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
 
 </manifest>
