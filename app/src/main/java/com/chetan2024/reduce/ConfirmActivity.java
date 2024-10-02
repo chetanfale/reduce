@@ -73,6 +73,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 // Handle the proceed action here
                 Log.d("ConfirmActivity", "Proceed button clicked");
                 // Intent intent = new Intent(ConfirmActivity.this, NextActivity.class);
+                startActivity(new Intent(ConfirmActivity.this, RedirectDWActivity.class));
                 // startActivity(intent);
             }
         });
