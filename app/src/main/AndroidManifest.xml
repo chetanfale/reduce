@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chetan2024.reduce">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Reduce">
+
+        <!-- Welcome Activity (Main) -->
+        <activity
+            android:name=".WelcomeActivity"
+            android:exported="true"> <!-- Make sure this is set -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Other activities -->
+        <activity android:name=".MotivationActivity" android:exported="true"/>
+        <activity android:name=".PermReqActivity" android:exported="true"/>
+        <activity android:name=".SelectAppsActivity" android:exported="true"/>
+        <activity android:name=".ConfirmMissionActivity" android:exported="true"/>
+        <activity android:name=".RedirectDWActivity" android:exported="true"/>
+
+    </application>
+
+</manifest>

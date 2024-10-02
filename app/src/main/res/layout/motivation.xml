@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <!-- Motivational Text -->
+    <TextView
+        android:id="@+id/motivationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You’ve come so far, keep reducing your app usage to achieve your goals!"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <!-- Button to Proceed -->
+    <Button
+        android:id="@+id/proceedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proceed"
+        android:onClick="goToPermReq" />
+</LinearLayout>
