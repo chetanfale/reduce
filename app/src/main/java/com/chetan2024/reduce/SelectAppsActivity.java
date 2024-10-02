@@ -3,58 +3,57 @@ package com.chetan2024.reduce;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectAppsActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private AppListAdapter appListAdapter;
-    private List<ApplicationInfo> appList;
+    private List<String> appList; // List of application names
+    private List<String> selectedApps; // List of selected applications
+    private ListView appsListView; // ListView for displaying apps
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.selectapps);
+        setContentView(R.layout.selectapps); // Make sure to use the correct XML layout file
 
-        recyclerView = findViewById(R.id.recyclerView);
-        Button submitButton = findViewById(R.id.submitButton);
+        appsListView = findViewById(R.id.appsListView);
+        appList = new ArrayList<>();
+        selectedApps = new ArrayList<>();
 
-        // Initialize the app list and load installed applications
-        appList = loadInstalledApps();
-        appListAdapter = new AppListAdapter(appList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(appListAdapter);
-
-        submitButton.setOnClickListener(v -> {
-            List<ApplicationInfo> selectedApps = appListAdapter.getSelectedApps();
-            if (selectedApps.isEmpty()) {
-                Toast.makeText(this, "Please select at least one application.", Toast.LENGTH_SHORT).show();
-            } else {
-                // Handle the selected applications (e.g., save their package names)
-                // Redirect to next activity or confirm selection
-                // For now, just show a toast
-                Toast.makeText(this, "Selected apps: " + selectedApps.size(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Load installed applications
+        loadInstalledApplications();
     }
 
-    private List<ApplicationInfo> loadInstalledApps() {
+    private void loadInstalledApplications() {
         PackageManager packageManager = getPackageManager();
-        List<ApplicationInfo> apps = packageManager.getInstalledApplications(0);
-        List<ApplicationInfo> userApps = new ArrayList<>();
-        for (ApplicationInfo app : apps) {
-            if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 0) { // Exclude system apps
-                userApps.add(app);
+        List<ApplicationInfo> apps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo appInfo : apps) {
+            // Exclude system apps if needed
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                appList.add(appInfo.loadLabel(packageManager).toString());
             }
         }
-        return userApps;
+
+        // Create a custom adapter to display the apps in a checkbox list
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, appList);
+        appsListView.setAdapter(adapter);
+        appsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        // Handle checkbox selection
+        appsListView.setOnItemClickListener((parent, view, position, id) -> {
+            CheckBox checkBox = (CheckBox) view.findViewById(android.R.id.checkbox);
+            if (checkBox.isChecked()) {
+                selectedApps.add(appList.get(position));
+            } else {
+                selectedApps.remove(appList.get(position));
+            }
+        });
     }
 }
