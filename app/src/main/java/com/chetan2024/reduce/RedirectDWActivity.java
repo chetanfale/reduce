@@ -3,6 +3,7 @@ package com.chetan2024.reduce;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,30 +27,19 @@ public class RedirectDWActivity extends AppCompatActivity {
                 "5. Once you reach the timer limit, the app will be paused for the day.\n\n" +
                 "By using app timers, you can better manage your screen time and reduce distractions.");
 
-        // Set an OnClickListener for the button
-        goToDigitalWellbeingButton.setOnClickListener(v -> {
-            Intent launchIntent = new Intent();
-            launchIntent.setAction(Intent.ACTION_MAIN);
-            launchIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            launchIntent.setPackage("com.google.android.apps.wellbeing");
+        // Set up button click listener to launch Digital Wellbeing app
+        goToDigitalWellbeingButton.setOnClickListener(v -> launchDigitalWellbeingApp());
+    }
 
-            try {
-                startActivity(launchIntent);
-            } catch (ActivityNotFoundException e) {
-                // If the app is not installed, show a toast or handle the error gracefully
-                e.printStackTrace(); // Print the stack trace for debugging
-                // Optionally, redirect to settings or show a message
-            }
-
-            // If it doesn't work, try using a specific activity
-            try {
-                Intent specificIntent = new Intent();
-                specificIntent.setAction(Intent.ACTION_VIEW);
-                specificIntent.setClassName("com.google.android.apps.wellbeing", "com.google.android.apps.wellbeing.home.HomeActivity");
-                startActivity(specificIntent);
-            } catch (ActivityNotFoundException e) {
-                e.printStackTrace(); // Handle exception if the activity is not found
-            }
-        });
+    private void launchDigitalWellbeingApp() {
+        Intent intent = new Intent();
+        intent.setPackage("com.google.android.apps.wellbeing");
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e("RedirectDWActivity", "Digital Wellbeing app not found", e);
+        }
     }
 }
