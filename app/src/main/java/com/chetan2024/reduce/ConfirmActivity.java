@@ -1,20 +1,20 @@
 package com.chetan2024.reduce;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class ConfirmActivity extends AppCompatActivity {
 
@@ -29,30 +29,29 @@ public class ConfirmActivity extends AppCompatActivity {
         selectedAppsLayout = findViewById(R.id.selectedAppsLayout);
         packageManager = getPackageManager();
 
-        // Get the selected apps from the intent
         ArrayList<String> selectedApps = getIntent().getStringArrayListExtra("selectedApps");
 
-        // Populate the selected apps
         if (selectedApps != null && !selectedApps.isEmpty()) {
             for (String packageName : selectedApps) {
                 try {
                     ApplicationInfo appInfo = packageManager.getApplicationInfo(packageName, 0);
                     String appName = packageManager.getApplicationLabel(appInfo).toString();
 
-                    // Create an ImageView for the app icon
                     ImageView appIcon = new ImageView(this);
                     appIcon.setImageDrawable(packageManager.getApplicationIcon(appInfo));
-                    appIcon.setLayoutParams(new LinearLayout.LayoutParams(100, 100)); // Set size for the icon
+                    appIcon.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
 
-                    // Create a TextView for the app name
                     TextView appText = new TextView(this);
                     appText.setText(appName);
-                    appText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    appText.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
 
-                    // Add the icon and name to the layout
                     LinearLayout appLayout = new LinearLayout(this);
                     appLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    appLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                    appLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
                     appLayout.addView(appIcon);
                     appLayout.addView(appText);
                     selectedAppsLayout.addView(appLayout);
@@ -65,17 +64,18 @@ public class ConfirmActivity extends AppCompatActivity {
             Log.w("ConfirmActivity", "No apps selected.");
         }
 
-        // Proceed button logic
         Button proceedButton = findViewById(R.id.proceedButton);
-        proceedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the proceed action here
-                Log.d("ConfirmActivity", "Proceed button clicked");
-                // Intent intent = new Intent(ConfirmActivity.this, NextActivity.class);
-                startActivity(new Intent(ConfirmActivity.this, RedirectDWActivity.class));
-                // startActivity(intent);
-            }
+        proceedButton.setOnClickListener(v -> {
+            Log.d("ConfirmActivity", "Proceed button clicked");
+
+            // Store selected apps in SharedPreferences
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConfirmActivity.this);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putStringSet("selectedApps", new HashSet<>(selectedApps));
+            editor.apply();
+
+            // Proceed to next activity
+            startActivity(new Intent(ConfirmActivity.this, RedirectDWActivity.class));
         });
     }
 }

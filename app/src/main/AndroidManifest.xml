@@ -11,7 +11,7 @@
         <!-- Welcome Activity (Main) -->
         <activity
             android:name=".WelcomeActivity"
-            android:exported="true"> <!-- Make sure this is set -->
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,11 +24,11 @@
         <activity android:name=".SelectAppsActivity" android:exported="true"/>
         <activity android:name=".ConfirmActivity" android:exported="true"/>
         <activity android:name=".RedirectDWActivity" android:exported="true"/>
-        <activity android:name=".SummaryActivity"/>
+        <activity android:name=".SummaryActivity" android:exported="true"/>
 
     </application>
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
 
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
 </manifest>
