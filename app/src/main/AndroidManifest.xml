@@ -6,7 +6,8 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Reduce">
+        android:theme="@style/Theme.Reduce"
+        tools:ignore="ExtraText">
 
         <!-- Welcome Activity (Main) -->
         <activity
@@ -25,6 +26,20 @@
         <activity android:name=".ConfirmActivity" android:exported="true"/>
         <activity android:name=".RedirectDWActivity" android:exported="true"/>
         <activity android:name=".SummaryActivity" android:exported="true"/>
+
+        <!-- Accessibility Service Declaration -->
+        <service
+            android:name=".YourAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service> <!-- Closing the service tag correctly -->
 
     </application>
 
